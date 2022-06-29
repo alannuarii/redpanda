@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include 'includes/styles.html' %} {% block title %}
+    <title>{{title}}</title>
+    {% endblock title %}
+    <!-- Favicons -->
+    <link href="{% static '/img/logo3.png' %}" rel="icon" />
+  </head>
+  <body>
+    {% block content %}
+
+    <main id="login" class="login d-flex align-items-center">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-4 offset-8 position-relative">
+            <img src="{% static '/img/logo3.png' %}" class="img-fluid position-absolute start-50 translate-middle" alt="" />
+            <div class="card shadow-lg text-center">
+              <h1 class="mb-3"><span style="color: #4a0e03">Red</span><span style="color: #ee2110">Panda</span></h1>
+              <h5 class="mb-4">Enter your username & password</h5>
+              <form method="POST" action="/login">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <input class="form-control form-control-lg" type="text" placeholder="Username" aria-label=".form-control-lg example" name="username" required />
+                </div>
+                <div class="mb-3">
+                  <input class="form-control form-control-lg" type="password" placeholder="Password" aria-label=".form-control-lg example" name="password" required />
+                </div>
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn w-100">Sign In</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {% endblock content %}{% include 'includes/preloader.html' %} {% include 'includes/scripts.html' %}
+  </body>
+</html>

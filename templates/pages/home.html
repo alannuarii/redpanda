@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %} {% block title %}
+<title>{{title}}</title>
+{% endblock title %} {% block content %}
+<section id="home" class="home">
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Nama Unit</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for eng in engines %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{eng.nama_unit}}</td>
+              <td><a href="{% url 'mesin' eng.id %}">Link</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

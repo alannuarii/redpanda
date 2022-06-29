@@ -1,0 +1,160 @@
+{% extends 'layouts/base.html' %} {% load humanize %} {% block title %}
+<title>{{title}}</title>
+{% endblock title %} {% block content %}
+<section id="mesin" class="mesin">
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="col-6 offset-1">
+        <div class="card card-mesin shadow">
+          {% for unit in nama_unit %}
+          <h4>{{unit.nama_unit_id|upper}}</h4>
+          {% endfor %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Unit</th>
+                <th scope="col">Nama Mesin</th>
+                <th scope="col">Daya Mampu</th>
+                <th scope="col">Status</th>
+                <th scope="col">Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for unit in list_unit %}
+              <tr>
+                <td>{{unit.unit}}</td>
+                <td>{{unit.nama_mesin}}</td>
+                <td>{{unit.daya_mampu}}</td>
+                {% if unit.is_sewa %}
+                <td>Sewa</td>
+                {% else %}
+                <td>PLN</td>
+                {% endif %}
+                <td>
+                  <form action="">
+                    <input type="hidden" name="id" value="{{unit.id}}" />
+                    <button type="submit" class="btn"><i class="bi-arrow-right-circle-fill btn-cost"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card card-cost shadow">
+          {% if request.GET.id %} {% for c in cost %}
+          <p>Cost {{c.mesin_id}}</p>
+          {% if c.fix_cost %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.fix_cost|intcomma}}" />
+            <label for="floatingInputValue">Total Fix Cost</label>
+          </div>
+          {% endif %} {% if c.time_base_vcost %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.time_base_vcost|intcomma}}" />
+            <label for="floatingInputValue">Total Time Based V-Cost</label>
+          </div>
+          {% endif %} {% if c.harga_sewa %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.harga_sewa|intcomma}}" />
+            <label for="floatingInputValue">Harga Sewa per kWh</label>
+          </div>
+          {% endif %} {% if c.pajak_air %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.pajak_air|intcomma}}" />
+            <label for="floatingInputValue">Pajak Air Permukaan</label>
+          </div>
+          {% endif %} {% if c.sfc_50 %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.sfc_50|intcomma}}" />
+            <label for="floatingInputValue">SFC 50% DMN</label>
+          </div>
+          {% endif %} {% if c.sfc_75 %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.sfc_75|intcomma}}" />
+            <label for="floatingInputValue">SFC 75% DMN</label>
+          </div>
+          {% endif %} {% if c.sfc_100 %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.sfc_100|intcomma}}" />
+            <label for="floatingInputValue">SFC 100% DMN</label>
+          </div>
+          {% endif %} {% if c.susut_trafo %}
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.susut_trafo|intcomma}}" />
+            <label for="floatingInputValue">Susut trafo</label>
+          </div>
+          {% endif %}
+          <p class="mt-3">Koefisien Common</p>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="{{c.susut_jaringan|intcomma}}" />
+            <label for="floatingInputValue">Susut Jaringan</label>
+          </div>
+          {% endfor %} {% else %}
+          <p>Cost</p>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Total Fix Cost</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Total Time Based V-Cost</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Harga Sewa per kWh</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Pajak Air Permukaan</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">SFC 50% DMN</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">SFC 75% DMN</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">SFC 100% DMN</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Susut trafo</label>
+          </div>
+          <p class="mt-3">Koefisien Common</p>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputValue" value="" disabled />
+            <label for="floatingInputValue">Susut Jaringan</label>
+          </div>
+          {% endif %}
+        </div>
+
+        {% comment %}
+        <form action="{% url 'mesin' id %}" method="get">
+          <input type="text" name="name" />
+          <button type="submit">Submit</button>
+        </form>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+  {% comment %}
+  <script type="text/javascript">
+    const cost = document.querySelectorAll(".{{test}}");
+    const cardCost = document.querySelector(".col-cost");
+
+    cost.forEach((harga) => {
+      harga.addEventListener("click", function () {
+        cardCost.style.display = "block";
+      });
+    });
+  </script>
+  {% endcomment %}
+</section>
+
+{% endblock content %}

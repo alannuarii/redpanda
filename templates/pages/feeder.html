@@ -1,0 +1,204 @@
+{% extends 'layouts/base.html' %}{% load static %} {% block title %}
+<title>{{title}}</title>
+{% endblock title %} {% block content %}
+<section id="feeder" class="feeder">
+  <div class="container-fluid">
+    <div class="row d-flex">
+      <div class="d-flex justify-content-start align-items-center nav">
+        <div class="btn btn-nav btn-sm me-3 ms-3" data-bs-toggle="modal" data-bs-target="#modal-feeder">
+          <i class="bi-upload" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload File"></i>
+        </div>
+        <div class="btn btn-nav btn-sm me-3" data-bs-toggle="modal" data-bs-target="#barchart">
+          <i class="bi-bar-chart-line-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Grafik"></i>
+        </div>
+        <div class="btn btn-nav btn-sm">
+          <form action="/feeder" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="tanggal" value="{{request.GET.tanggal}}" />
+            <button type="submit" class="btn" onclick="return confirm('Yakin gak lu?')"><i class="bi-trash3-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i></button>
+          </form>
+        </div>
+        <form action="" class="ms-auto me-3">
+          <input type="date" name="tanggal" value="" onchange="this.form.submit()" />
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      {% if messages %} {% for msg in messages %} {% if msg.tags == 'success' %}
+      <div class="alert alert-success text-center position-absolute start-50 translate-middle success" id="flashmsg" role="alert">{{msg}}</div>
+      {% endif %} {% if msg.tags == 'warning' %}
+      <div class="alert alert-warning text-center position-absolute start-50 translate-middle success" id="flashmsg" role="alert">{{msg}}</div>
+      {% endif %}{% if msg.tags == 'error' %}
+      <div class="alert alert-danger text-center position-absolute start-50 translate-middle success" id="flashmsg" role="alert">{{msg}}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <div class="col-12">
+        {% if feeder %}
+        <div class="card shadow">
+          <table class="table table-bordered text-center beban-feeder">
+            <thead>
+              <tr>
+                {% for tgl in tanggal %}
+                <th scope="col" colspan="22" class="judul-tabel">Data Beban Feeder Tanggal {{tgl.tanggal|date:'d - m - Y'}}</th>
+                {% endfor %}
+              </tr>
+              <tr>
+                <th scope="col" rowspan="2" class="align-middle">Jam</th>
+                <th scope="col" colspan="7">PLTD Tahuna</th>
+                <th scope="col" colspan="5">PLTD Petta</th>
+                <th scope="col" colspan="4">PLTD Tamako</th>
+                <th scope="col" colspan="4">PLTD Lesabe</th>
+                <th scope="col" rowspan="2" class="bg-dark text-light align-middle">Total</th>
+              </tr>
+              <tr>
+                <th scope="col" class="align-middle">Kota</th>
+                <th scope="col" class="align-middle">Tona</th>
+                <th scope="col" class="align-middle">Kolongan</th>
+                <th scope="col" class="align-middle">Lesabe</th>
+                <th scope="col" class="align-middle">Tamako</th>
+                <th scope="col">Mineline Petta</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col">Petta Kota</th>
+                <th scope="col">Mineline Tahuna</th>
+                <th scope="col" class="align-middle">Kendahe</th>
+                <th scope="col" class="align-middle">Bowongkulu</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col">Kota Tamako</th>
+                <th scope="col" class="align-middle">Lapango</th>
+                <th scope="col" class="align-middle">Tahuna</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col" class="align-middle">Salurang</th>
+                <th scope="col" class="align-middle">Pintareng</th>
+                <th scope="col">Tahuna (Income)</th>
+                <th scope="col">Sub Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for fed in feeder %}
+              <tr>
+                <th scope="row">{{fed.jam}}</th>
+                <td>{{fed.kota}}</td>
+                <td>{{fed.tona}}</td>
+                <td>{{fed.kolongan}}</td>
+                <td>{{fed.lesabe}}</td>
+                <td>{{fed.tamako}}</td>
+                <td>{{fed.main_line_petta}}</td>
+                <td>{{fed.pltd_tahuna}}</td>
+                <td>{{fed.petta_kota}}</td>
+                <td>{{fed.main_line_tahuna}}</td>
+                <td>{{fed.kendahe}}</td>
+                <td>{{fed.bowongkulu}}</td>
+                <td>{{fed.pltd_petta}}</td>
+                <td>{{fed.kota_tamako}}</td>
+                <td>{{fed.lapango}}</td>
+                <td>{{fed.tahuna}}</td>
+                <td>{{fed.pltd_tamako}}</td>
+                <td>{{fed.salurang}}</td>
+                <td>{{fed.pintareng}}</td>
+                <td>{{fed.tahuna_income}}</td>
+                <td>{{fed.pltd_lesabe}}</td>
+                <td class="bg-secondary text-light">{{fed.total}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>Keterangan: <span class="fst-italic">Data dalam satuan kW</span></p>
+        </div>
+        {% else %}
+        <div class="blank-data position-absolute top-50 start-50 translate-middle text-center">
+          <img src="{% static '/img/not_found.svg' %}" class="img-fluid" alt="" />
+          <p class="mt-3">Masukkan Tanggal Data Beban Feeder</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Upload Data-->
+  <div class="modal fade" id="modal-feeder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Upload File Beban Feeder</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/feeder" method="POST" enctype="multipart/form-data" class="d-flex justify-content-end py-3">
+            {% csrf_token %}
+            <label for=""></label>
+            <input type="file" class="form-control" name="feeder" />
+            <input type="submit" class="btn ms-2" value="Upload" />
+          </form>
+          <div>
+            <div class="btn">
+              <i class="bi-download"><span class="fst-normal ms-2">Download File</span></i>
+            </div>
+            <p class="fw-bolder mb-0 mt-2">Catatan:</p>
+            <ul>
+              <li>Ekstensi file harus Excel (.xlsx)</li>
+              <li>Dll</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Akhir Modal Upload Data  -->
+
+  <!-- Modal Bar Chart-->
+  <div class="modal fade" id="barchart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mesin</h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <figure class="highcharts-figure">
+            <div id="container"></div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Ahir Modal Bar Chart-->
+  <script>
+    const jam = {{jam|safe}}
+    const beban = {{beban|safe}}
+    Highcharts.chart("container", {
+      chart: {
+        type: "column",
+      },
+      title: {
+        text: "Realisasi Beban Feeder",
+      },
+      // subtitle: {
+      //   text: "Source: WorldClimate.com",
+      // },
+      xAxis: {
+        categories: jam,
+        crosshair: true,
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: "Beban Feeder (kW)",
+        },
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>{point.y:.1f} kW</b></td></tr>',
+        footerFormat: "</table>",
+        shared: true,
+        useHTML: true,
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+        },
+      },
+      series: [{ name: "Beban Feeder", data: beban }],
+    });
+  </script>
+</section>
+{% endblock content %}

@@ -1,0 +1,483 @@
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+:root {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: var(--color-links);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-links-hover);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+}
+
+section {
+  padding: 90px 20px;
+  overflow: hidden;
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+.header {
+  padding: 15px 0;
+  transition: all 0.5s;
+  z-index: 997;
+  background: var(--color-white);
+}
+.header .logo img {
+  max-height: 50px;
+  margin-right: 10px;
+  margin-top: -10px;
+}
+.header .logo h1 {
+  font-size: 40px;
+  font-weight: 300;
+  font-family: "Cooper Black", sans-serif;
+}
+
+/*--------------------------------------------------------------
+  # Desktop Navigation 
+  --------------------------------------------------------------*/
+@media (min-width: 1280px) {
+  .navbar {
+    padding: 0;
+  }
+  .navbar ul {
+    margin: -30px;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+  .navbar li {
+    position: relative;
+  }
+  .navbar > ul > li {
+    white-space: nowrap;
+  }
+  .navbar a,
+  .navbar a:focus {
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 30px;
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-default-light);
+    white-space: nowrap;
+    transition: 0.3s;
+    position: relative;
+  }
+  .navbar a i,
+  .navbar a:focus i {
+    font-size: 12px;
+    line-height: 0;
+  }
+  .navbar > ul > li > a:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-links-hover);
+    visibility: hidden;
+    transition: all 0.3s ease-in-out 0s;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
+  }
+  .navbar a:hover:before,
+  .navbar li:hover > a:before {
+    visibility: visible;
+    transform: scaleX(0.7);
+  }
+  .navbar a:hover,
+  .navbar .active,
+  .navbar .active:focus,
+  .navbar li:hover > a {
+    color: var(--color-primary);
+  }
+}
+
+.header .dropdown .btn-akun {
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 15px;
+  padding: 8px 25px 8px 25px;
+  transition: all 0.5s ease-in-out;
+}
+
+.header .dropdown .btn-akun:hover {
+  background: var(--color-primary-light);
+}
+
+.header .dropdown .btn-akun:focus {
+  border-radius: 15px 15px 0px 0px;
+}
+
+.header .dropdown .dropdown-menu {
+  padding: 20px 30px;
+  border-radius: 15px 0px 15px 15px;
+  border-bottom: 5px solid var(--color-secondary);
+}
+
+.header .dropdown .dropdown-menu h5 {
+  color: var(--color-secondary);
+}
+
+.header .dropdown .dropdown-menu p {
+  margin-top: -5px;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: var(--color-white);
+  transition: all 0.6s ease-out;
+  width: 100%;
+  height: 100vh;
+}
+#preloader:before,
+#preloader:after {
+  content: "";
+  position: absolute;
+  border: 4px solid var(--color-primary);
+  border-radius: 50%;
+  -webkit-animation: animate-preloader 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation: animate-preloader 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+#preloader:after {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    width: 10px;
+    height: 10px;
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
+    opacity: 1;
+  }
+  100% {
+    width: 72px;
+    height: 72px;
+    top: calc(50% - 36px);
+    left: calc(50% - 36px);
+    opacity: 0;
+  }
+}
+
+@keyframes animate-preloader {
+  0% {
+    width: 10px;
+    height: 10px;
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
+    opacity: 1;
+  }
+  100% {
+    width: 72px;
+    height: 72px;
+    top: calc(50% - 36px);
+    left: calc(50% - 36px);
+    opacity: 0;
+  }
+}
+
+/*--------------------------------------------------------------
+  # Home 
+  --------------------------------------------------------------*/
+
+.home {
+  height: 100vh;
+  width: 100%;
+}
+
+/*--------------------------------------------------------------
+  # Login
+  --------------------------------------------------------------*/
+
+#login {
+  width: 100%;
+  height: 100vh;
+}
+
+#login .container {
+  padding-top: 10px;
+  position: relative;
+}
+
+.login .card {
+  padding: 20px 50px 50px 50px;
+  border-radius: 50px;
+  border-bottom: 10px solid var(--color-secondary);
+}
+
+.login button {
+  background-color: var(--color-links);
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: #fff;
+  font-weight: bolder;
+}
+
+.login button:hover {
+  background-color: var(--color-links-hover);
+  color: #fff;
+}
+
+.login .form-control {
+  border-radius: 15px;
+}
+
+.login img {
+  width: 65%;
+  top: -40px;
+}
+
+.login h1 {
+  font-family: "Cooper Black", sans-serif;
+}
+
+.login p {
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+/*--------------------------------------------------------------
+  # Mesin 
+  --------------------------------------------------------------*/
+
+.mesin {
+  height: 100vh;
+  width: 100%;
+}
+
+.mesin i {
+  font-size: 17px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.mesin i:hover {
+  color: var(--color-primary-light);
+}
+
+.mesin .card-mesin {
+  padding: 20px 30px;
+  border-radius: 15px;
+  border-bottom: 5px solid var(--color-secondary);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.mesin .card-mesin h4 {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.mesin button[type="submit"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.mesin .card-cost {
+  padding: 10px 30px 20px 30px;
+  border-radius: 15px;
+  border-bottom: 5px solid var(--color-secondary);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.mesin .card-cost .form-floating:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.mesin .card-cost .form-control,
+.mesin .card-cost label {
+  border-radius: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.mesin .card-cost label {
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.mesin .card-cost p {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-primary);
+  margin-bottom: 5px;
+}
+
+/*--------------------------------------------------------------
+  # Feeder
+  --------------------------------------------------------------*/
+
+.feeder {
+  /* height: 100vh; */
+  width: 100%;
+}
+
+.feeder .beban-feeder {
+  font-size: 12px;
+}
+
+.feeder .col-12 .card {
+  border: 5px solid var(--color-secondary);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.feeder .nav input {
+  padding: 7px;
+}
+
+.feeder .btn-nav {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.feeder .btn-nav:hover {
+  background-color: var(--color-primary-light);
+}
+
+.feeder .judul-tabel {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.feeder #modal-feeder .btn {
+  background-color: var(--color-primary);
+  border-radius: 15px;
+  color: #fff;
+}
+
+.feeder #modal-feeder .btn:hover {
+  background-color: var(--color-primary-light);
+}
+
+.feeder .success {
+  z-index: 999;
+  width: 60%;
+  border-radius: 15px;
+}
+
+.feeder .blank-data img {
+  width: 55%;
+}
+
+.feeder .blank-data p {
+  color: var(--color-primary);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.feeder .btn-nav button[type="submit"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/*--------------------------------------------------------------
+  # Har
+  --------------------------------------------------------------*/
+
+.har {
+  /* height: 100vh; */
+  width: 100%;
+}
+
+.har .btn-nav {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.har .nav input {
+  padding: 7px;
+}
+
+.har .btn-nav:hover {
+  background-color: var(--color-primary-light);
+}
+
+.har .blank-data img {
+  width: 55%;
+}
+
+.har .blank-data p {
+  color: var(--color-primary);
+  font-size: 30px;
+  font-weight: 700;
+}
+.har button[type="submit"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+.har .table-input i {
+  font-size: 20px;
+  color: var(--color-primary);
+}
+.har .btn-har {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.har .btn-har:hover {
+  background-color: var(--color-primary-light);
+}
+
+.har .card {
+  border: 5px solid var(--color-secondary);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.har .input-tanggal input {
+  padding: 10px;
+  font-size: 20px;
+}
